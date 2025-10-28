@@ -1,0 +1,18 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore personal notes or temp logs
+commands.md
+*.log
+logs/
+tmp/
+scratch.txt
+
+# VS Code workspace settings (optional)
+.vscode/
+*.code-workspace
