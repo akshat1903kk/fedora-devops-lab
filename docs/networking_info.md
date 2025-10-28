@@ -1,0 +1,3 @@
+- Fedora internal IP: `192.168.1.13`
+- Network adapter: `NAT + Host-only` configuration in VirtualBox
+- Accessible from host system browser via `http://192.168.1.13`
