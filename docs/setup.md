@@ -1,10 +1,21 @@
-## Step 1 - SSH and Networking Setup
-- Installed **sshd**, **curl**, and **git**
-- Enabled and verified SSH service
-- Server accessible within internal network at `192.168.1.13`
+# Fedora DevOps Lab – Setup Log
 
-## Step 2 - Nginx Web Server Setup
-- Installed **Nginx**
-- Enabled and started Nginx service via `systemctl`
-- Verified web server access through browser at `http://192.168.1.13`
-- Displayed Fedora default web server test page confirming successful setup
+## Step 1: SSH and Networking Setup
+Installed SSH, curl, git. Configured bridged adapter, opened ports.
+
+## Step 2: Nginx Web Server Setup
+Installed and verified via http://192.168.1.13
+
+## Step 3: FastAPI + Uvicorn Setup
+Created venv, installed FastAPI, and tested app.
+
+## Step 4: Reverse Proxy with Nginx
+Configured dashboard.conf to forward 80 → 8000, tested and restarted Nginx.
+
+## Step 5: Documentation & Git Integration
+Structured repo, pushed to GitHub, added docs.
+
+## Step 6: Troubleshooting Highlights
+Fixed 502 Bad Gateway and network/firewall issues.
+
+✅ Fedora + Nginx + FastAPI stack running
