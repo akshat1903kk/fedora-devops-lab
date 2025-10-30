@@ -1,120 +1,114 @@
-<<<<<<< HEAD
+---
 # Fedora DevOps Lab
-My personal self-hosted DevOps learning environment — Fedora-based local server + dashboard build log.
-=======
-# **Fedora DevOps Lab**
+
+A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack monitoring dashboard on a local Fedora server, from bare metal to a containerized, CI/CD-driven application.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## ⚙️ **TL;DR**
-A self-hosted Fedora Server lab for mastering **DevOps fundamentals** — from secure networking and web hosting to containerization, CI/CD pipelines, and infrastructure monitoring — evolving into a **personal PWA dashboard** powered by FastAPI and Chart.js.
+## Project Goal
+
+The objective is to build a complete, self-hosted DevOps lab from scratch. This involves:
+* **Infrastructure:** Setting up a Fedora VM as a bare-metal server.
+* **Backend:** A containerized FastAPI application to collect and serve data.
+* **Frontend:** A web dashboard (planned) to visualize system metrics.
+* **DevOps Pipeline:** Full CI/CD, monitoring, and automation (planned).
 
 ---
 
-## 🧠 **Introduction**
-Welcome to the **Fedora DevOps Lab** — a hands-on, self-hosted learning environment designed to simulate modern DevOps workflows using **Fedora Server** as the foundation.  
-This project is my sandbox to learn, build, and document full-stack DevOps concepts — including system administration, secure web deployment, CI/CD automation, and real-time monitoring — while keeping everything lean, modular, and reproducible.
+## 📊 Current Status (Updated)
 
-Whether you're a fellow learner or a seasoned engineer, this repository offers a structured roadmap and real-world examples for building a **production-grade infrastructure from scratch**.
+The project is in the initial development phase. The backend service has been successfully containerized.
 
----
+* ✅ **Infrastructure:** Base Fedora VM is set up and accessible.
+* ✅ **Backend:** Created a basic FastAPI application (`backend/app/main.py`).
+* ✅ **Containerization:** Wrote a `Dockerfile` for the backend.
+* ✅ **Build:** Successfully built the `fedora-backend` Docker image.
+* ✅ **Deployment:** The backend container runs and serves "Hello World" & `/health` endpoints.
 
-## 🚀 **Vision (7-Week Projection)**
-The Fedora DevOps Lab will evolve over 7 weeks from a basic Fedora setup into a **fully containerized, automated infrastructure** featuring:
-
-- Continuous Integration & Deployment pipelines  
-- Infrastructure-as-Code provisioning  
-- Live traffic monitoring and analytics  
-- Secure self-hosted web app deployments  
-- A custom **PWA dashboard** built with **FastAPI (backend)** and **Chart.js (frontend)** to visualize server metrics, app performance, and network activity  
-
-This project aims to become a **personal control center** for managing deployed apps, tracking usage, and experimenting with secure network configurations — all running privately on local infrastructure.
+**Next Steps:**
+* Integrate the backend with a PostgreSQL database.
+* Set up Alembic for database migrations.
+* Begin development of the frontend dashboard.
 
 ---
 
-## 📅 **Phase Breakdown**
+## 🚀 Getting Started
 
-### **Week 1–2: Foundation & Web Server**
-- Base Fedora server setup and documentation  
-- Secure SSH access and network configuration  
-- Nginx web server deployment and verification  
-- Git integration for infrastructure documentation and version control  
+You can now build and run the backend service.
 
-### **Week 3–4: Containerization**
-- Installation and configuration of **Docker** and **Docker Compose**  
-- Deployment of sample web app containers  
-- Setup of a private or GitHub Container Registry (GHCR)  
-- Documentation of container workflows  
+### Prerequisites
 
-### **Week 5–6: CI/CD & Monitoring**
-- Integration of **GitHub Actions** for automated builds  
-- Continuous deployment pipeline for containerized apps  
-- Setup of monitoring stack with **Prometheus** and **Grafana**  
-- Logging pipeline using **Fluentd** or **Loki**  
+* [Docker](https://www.docker.com/get-started) installed and running.
+* [Git](https://git-scm.com/)
 
-### **Week 7: Infrastructure as Code + PWA Integration**
-- Build and integrate **FastAPI backend**  
-- Create **Chart.js** dashboard for traffic analytics  
-- Develop Progressive Web App (PWA) for control and monitoring  
-- Write **Ansible** playbooks for complete provisioning  
-- Finalize documentation and system diagrams  
+### Running the Backend
+
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/akshat1903kk/fedora-devops-lab.git](https://github.com/akshat1903kk/fedora-devops-lab.git)
+    cd fedora-devops-lab/dashboard/backend
+    ```
+
+2.  **Build the Docker image:**
+    From within the `dashboard/backend` directory, run:
+    ```bash
+    docker build -t fedora-backend .
+    ```
+
+3.  **Run the container:**
+    ```bash
+    docker run -d -p 8000:8000 --name fedora-api fedora-backend
+    ```
+
+4.  **Test the API:**
+    Open your browser or use `curl` to test the endpoints:
+    ```bash
+    # Test the root endpoint
+    curl http://localhost:8000/
+    # Expected output: {"message":"Hello, Fedora DevOps Lab!"}
+
+    # Test the health check
+    curl http://localhost:8000/health
+    # Expected output: {"status":"ok"}
+    ```
 
 ---
 
-## 📊 **Current Status**
-✅ Fedora Server setup complete  
-✅ SSH and Nginx configuration verified  
-🚧 Preparing for Docker and FastAPI integration  
+## 🛠️ Core Technologies
+
+| Category | Technology | Status |
+| :--- | :--- | :--- |
+| **Infrastructure** | Fedora VM | ✅ Implemented |
+| **Backend** | Python, FastAPI | ✅ Implemented |
+| **Database** | PostgreSQL | 🚧 Planned |
+| **Migrations** | Alembic | 🚧 Planned |
+| **Containerization** | Docker | ✅ Implemented |
+| **Frontend** | React / Vue (TBD) | 🚧 Planned |
+| **CI/CD** | GitHub Actions | 🚧 Planned |
+| **Monitoring** | Prometheus, Grafana | 🚧 Planned |
 
 ---
 
-## 🧩 **Project Structure**
+## 📁 Project Structure
+
+
 fedora-devops-lab/
-├── ansible/ # Ansible playbooks for provisioning (Week 7)
-├── configs/ # Configurations for services and network setup
-├── docs/ # Documentation and progress logs
-├── scripts/ # Automation and setup scripts
-├── src/ # FastAPI backend and PWA frontend (coming soon)
-└── README.md # You’re reading it
-
-yaml
-Copy code
-
----
-
-## 🛠️ **Technologies & Tools**
-| Category | Tools |
-|-----------|--------|
-| **Operating System** | Fedora Server |
-| **Web Server** | Nginx |
-| **Backend** | FastAPI |
-| **Frontend** | Chart.js, HTML, CSS |
-| **Containerization** | Docker, Docker Compose |
-| **CI/CD** | GitHub Actions |
-| **Monitoring** | Prometheus, Grafana |
-| **Logging** | Fluentd, Loki |
-| **IaC** | Ansible |
-| **Version Control** | Git & GitHub |
+├── dashboard/
+│   ├── backend/
+│   │   ├── app/
+│   │   │   └── main.py       # FastAPI application logic
+│   │   ├── venv/             # Local virtual environment (in .gitignore)
+│   │   ├── Dockerfile        # Instructions to build the backend image
+│   │   └── requirements.txt  # Python dependencies
+│   │
+│   └── frontend/             # (Placeholder for frontend code)
+│
+├── docs/                     # Project documentation, diagrams, etc.
+└── readme.md                 # You are here
 
 ---
 
-## 🧾 **License**
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.  
+## License
 
-The MIT License allows you to:  
-- ✅ Use the code commercially  
-- ✅ Modify and distribute it  
-- ✅ Include it in proprietary software  
-- ✅ Use it privately  
-Just keep the original copyright and license notice.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
----
-
-## 👤 **Author**
-**Akshat**  
-- GitHub: [@akshat1903kk](https://github.com/akshat1903kk)  
-- Repository: [fedora-devops-lab](https://github.com/akshat1903kk/fedora-devops-lab)  
-
----
-
-*This is a living project — progress is documented weekly. Star ⭐ the repository to follow the journey as Fedora DevOps Lab evolves into a fully self-hosted PWA control center.*
->>>>>>> 6bd9f1c7eeb6227aa83601220ca5a5e83e57391a
