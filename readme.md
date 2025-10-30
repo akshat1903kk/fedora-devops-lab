@@ -1,4 +1,4 @@
----
+
 # Fedora DevOps Lab
 
 A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack monitoring dashboard on a local Fedora server, from bare metal to a containerized, CI/CD-driven application.
