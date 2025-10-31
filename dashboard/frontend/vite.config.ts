@@ -7,13 +7,12 @@ export default defineConfig({
 
   // Add this 'server' block
   server: {
-    proxy: {
-      // This will proxy any request starting with /api
-      '/api': {
-        target: 'http://192.168.1.13', // Your Fedora VM's IP
-        changeOrigin: true, // Needed for virtual hosted sites
-        secure: false,      // If you're not using HTTPS
-      }
+  proxy: {
+    '/api': {
+      target: 'http://192.168.1.13:8080', // <-- CHANGE THIS PORT
+      changeOrigin: true,
+      secure: false,
     }
   }
+}
 })
