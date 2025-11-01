@@ -1,0 +1,35 @@
+name: Build Container Image
+
+on:
+  push:
+    branches:
+      - "main"
+      - "tests"
+  pull_request:
+    branches:
+      - "main"
+
+jobs:
+  build-backend-image:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        # Assumes your Dockerfile is in this folder
+        working-directory: ./dashboard/backend
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        # This helps set up the virtual machine environment for building
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Podman
+        # Installs Podman on the runner
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install podman
+
+      - name: Build the image
+        # This is our test! It just builds the image to see if it works.
+        run: podman build -t my-test-image .
