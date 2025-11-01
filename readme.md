@@ -1,44 +1,40 @@
 
 # Fedora DevOps Lab
 
-A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack monitoring dashboard on a local Fedora server, from bare metal to a containerized, CI/CD-driven application.
+A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack application, from bare metal to a containerized, CI/CD-driven app deployed on a 24/7 low-power server.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Project Goal
 
-The objective is to build a complete, self-hosted DevOps lab from scratch. This involves:
-* **Infrastructure:** Setting up a Fedora VM as a bare-metal server.
-* **Backend:** A containerized FastAPI application to collect and serve data.
-* **Frontend:** A web dashboard (planned) to visualize system metrics.
-* **DevOps Pipeline:** Full CI/CD, monitoring, and automation (planned).
+The objective is to build a complete, self-hosted DevOps lab from scratch. This project now uses **two distinct environments**:
+
+1.  **Fedora VM (Dev Lab):** A sandboxed environment for testing heavy-duty, enterprise-grade tools like Podman, `firewalld`, SELinux, and Ansible.
+2.  **Android + Termux (Prod Server):** A 24/7, low-power "always-on" server (a spare phone) for hosting the live, secured application.
 
 ---
 
 ## 📊 Current Status (Updated)
 
-The project is in the initial development phase. The backend service has been successfully containerized.
+The project is fully operational with a CI/CD pipeline and a live 24/7 server.
 
-* ✅ **Infrastructure:** Base Fedora VM is set up and accessible.
-* ✅ **Backend:** Created a basic FastAPI application (`backend/app/main.py`).
-* ✅ **Containerization:** Wrote a `Dockerfile` for the backend.
-* ✅ **Build:** Successfully built the `fedora-backend` Docker image.
-* ✅ **Deployment:** The backend container runs and serves "Hello World" & `/health` endpoints.
-
-**Next Steps:**
-* Integrate the backend with a PostgreSQL database.
-* Set up Alembic for database migrations.
-* Begin development of the frontend dashboard.
+* ✅ **Infrastructure:** Deployed on two environments: a Fedora VM (lab) and an Android + Termux phone (prod).
+* ✅ **Backend:** FastAPI app running on the Termux server, proxied by Nginx.
+* 🚧 **Security:** Nginx reverse proxy is being configured with a self-signed SSL certificate (HTTPS) on the Termux server.
+* ✅ **Frontend:** React + TypeScript app is in progress and proxies to the live server for development.
+* ✅ **CI/CD Pipeline:** GitHub Actions are **live** and running on every push.
+* ✅ **Automation 1 (Linter):** An agent automatically runs `black` and `npm run lint` to check all Python and React code.
+* ✅ **Automation 2 (Builder):** An agent automatically runs `podman build` to validate the backend `Dockerfile`.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Fedora Lab)
 
-You can now build and run the backend service.
+This guide helps you run the backend service in the **Fedora VM (Dev Lab)** environment.
 
 ### Prerequisites
 
-* [Docker](https://www.docker.com/get-started) installed and running.
+* [Podman](https://podman.io/) installed and running.
 * [Git](https://git-scm.com/)
 
 ### Running the Backend
@@ -49,27 +45,24 @@ You can now build and run the backend service.
     cd fedora-devops-lab/dashboard/backend
     ```
 
-2.  **Build the Docker image:**
+2.  **Build the Podman image:**
     From within the `dashboard/backend` directory, run:
     ```bash
-    docker build -t fedora-backend .
+    podman build -t fedora-backend .
     ```
 
 3.  **Run the container:**
+    This maps your VM's port `8080` to the container's port `8000`.
     ```bash
-    docker run -d -p 8000:8000 --name fedora-api fedora-backend
+    podman run -d -p 8080:8000 --name fedora-api fedora-backend
     ```
 
 4.  **Test the API:**
     Open your browser or use `curl` to test the endpoints:
     ```bash
-    # Test the root endpoint
-    curl http://localhost:8000/
-    # Expected output: {"message":"Hello, Fedora DevOps Lab!"}
-
-    # Test the health check
-    curl http://localhost:8000/health
-    # Expected output: {"status":"ok"}
+    # Test the API status
+    curl http://localhost:8080/api/v1/status
+    # Expected output: {"status":"Fedora Lab API Live"}
     ```
 
 ---
@@ -78,37 +71,24 @@ You can now build and run the backend service.
 
 | Category | Technology | Status |
 | :--- | :--- | :--- |
-| **Infrastructure** | Fedora VM | ✅ Implemented |
+| **Infrastructure** | Fedora VM & Android (Termux) | ✅ Implemented |
 | **Backend** | Python, FastAPI | ✅ Implemented |
 | **Database** | PostgreSQL | 🚧 Planned |
 | **Migrations** | Alembic | 🚧 Planned |
-| **Containerization** | Docker | ✅ Implemented |
-| **Frontend** | React / Vue (TBD) | 🚧 Planned |
-| **CI/CD** | GitHub Actions | 🚧 Planned |
+| **Containerization** | Podman | ✅ Implemented |
+| **Frontend** | React + Vite + TS | ✅ In Progress |
+| **CI/CD** | GitHub Actions | ✅ Implemented |
 | **Monitoring** | Prometheus, Grafana | 🚧 Planned |
 
 ---
 
 ## 📁 Project Structure
 
+fedora-devops-lab/ ├── .github/ # <-- NEW! GitHub Actions │ └── workflows/ │ ├── lint.yml # CI Linter Agent │ └── build.yml # CI Build Agent ├── dashboard/ │ ├── backend/ │ │ ├── app/ │ │ │ └── main.py │ │ ├── Dockerfile │ │ └── requirements.txt │ └── frontend/ │ ├── src/ │ ├── package.json │ └── vite.config.ts ├── docs/ │ ├── progress.md # Project milestone log │ ├── networking.md # IP/Port reference │ └── teaching_insights.md # Main technical documentation └── README.md # You are here
 
-fedora-devops-lab/
-├── dashboard/
-│   ├── backend/
-│   │   ├── app/
-│   │   │   └── main.py       # FastAPI application logic
-│   │   ├── venv/             # Local virtual environment (in .gitignore)
-│   │   ├── Dockerfile        # Instructions to build the backend image
-│   │   └── requirements.txt  # Python dependencies
-│   │
-│   └── frontend/             # (Placeholder for frontend code)
-│
-├── docs/                     # Project documentation, diagrams, etc.
-└── readme.md                 # You are here
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details
