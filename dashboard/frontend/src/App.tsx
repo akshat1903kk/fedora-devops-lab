@@ -7,7 +7,7 @@ function App() {
   useEffect(() => {
     // Fetch from the *relative* /api path
     // Vite will proxy this to your Fedora server
-    fetch('/api/v1/status') // Assuming this is a valid endpoint
+    fetch('/health') // Assuming this is a valid endpoint
       .then(res => res.json())
       .then(data => {
         setApiStatus(JSON.stringify(data))
