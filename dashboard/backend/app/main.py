@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import List
 
 # Make sure this file is in the same 'app' directory
-from log_analyzer import analyze_logs
+from .log_analyzer import analyze_logs
 
 app = FastAPI(
     title="DevOps Lab API", 
