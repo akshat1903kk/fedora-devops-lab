@@ -1,94 +1,59 @@
+# Cloud DevOps Journey
 
-# Fedora DevOps Lab
-
-A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack application, from bare metal to a containerized, CI/CD-driven app deployed on a 24/7 low-power server.
+A personal project documenting the journey of building a full-stack, cloud-native application. This repository demonstrates a modern DevOps workflow using Docker, GitHub Actions, and Render.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Project Goal
+## 📊 Project Status: Live on Render
 
-The objective is to build a complete, self-hosted DevOps lab from scratch. This project now uses **two distinct environments**:
+This project is fully containerized, automated with CI/CD, and deployed live on the public internet.
 
-1.  **Fedora VM (Dev Lab):** A sandboxed environment for testing heavy-duty, enterprise-grade tools like Podman, `firewalld`, SELinux, and Ansible.
-2.  **Android + Termux (Prod Server):** A 24/7, low-power "always-on" server (a spare phone) for hosting the live, secured application.
-
----
-
-## 📊 Current Status (Updated)
-
-The project is fully operational with a CI/CD pipeline and a live 24/7 server.
-
-* ✅ **Infrastructure:** Deployed on two environments: a Fedora VM (lab) and an Android + Termux phone (prod).
-* ✅ **Backend:** FastAPI app running on the Termux server, proxied by Nginx.
-* 🚧 **Security:** Nginx reverse proxy is being configured with a self-signed SSL certificate (HTTPS) on the Termux server.
-* ✅ **Frontend:** React + TypeScript app is in progress and proxies to the live server for development.
-* ✅ **CI/CD Pipeline:** GitHub Actions are **live** and running on every push.
-* ✅ **Automation 1 (Linter):** An agent automatically runs `black` and `npm run lint` to check all Python and React code.
-* ✅ **Automation 2 (Builder):** An agent automatically runs `podman build` to validate the backend `Dockerfile`.
+* **Production:** The backend API is deployed on **Render** as a web service.
+* **CI/CD:**
+    * **Continuous Integration (CI):** GitHub Actions automatically lints Python/React code and validates the Docker build on every push.
+    * **Continuous Deployment (CD):** Render is connected to this repo and automatically deploys any push to the `main` branch to production.
+* **Frontend:** A React + Vite app (in progress).
 
 ---
 
-## 🚀 Getting Started (Fedora Lab)
+## 🚀 Getting Started (Local Development)
 
-This guide helps you run the backend service in the **Fedora VM (Dev Lab)** environment.
-
-### Prerequisites
-
-* [Podman](https://podman.io/) installed and running.
-* [Git](https://git-scm.com/)
-
-### Running the Backend
+You can run the entire backend stack on your local machine with a single command using Docker Compose.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/akshat1903kk/fedora-devops-lab.git](https://github.com/akshat1903kk/fedora-devops-lab.git)
-    cd fedora-devops-lab/dashboard/backend
+    git clone [https://github.com/akshat1903kk/FastAPI-React-Lab.git](https://github.com/akshat1903kk/FastAPI-React-Lab.git)
+    cd FastAPI-React-Lab
     ```
 
-2.  **Build the Podman image:**
-    From within the `dashboard/backend` directory, run:
+2.  **Start the application:**
+    This command builds the Docker image and starts the container.
     ```bash
-    podman build -t fedora-backend .
+    docker-compose up --build
     ```
 
-3.  **Run the container:**
-    This maps your VM's port `8080` to the container's port `8000`.
+3.  **Test the local API:**
+    The server will be running on your local machine.
     ```bash
-    podman run -d -p 8080:8000 --name fedora-api fedora-backend
+    curl http://localhost:8000/api/v1/status
     ```
-
-4.  **Test the API:**
-    Open your browser or use `curl` to test the endpoints:
-    ```bash
-    # Test the API status
-    curl http://localhost:8080/api/v1/status
-    # Expected output: {"status":"Fedora Lab API Live"}
-    ```
+    *(Expected output: `{"status":"DevOps Lab API is Live"}`)*
 
 ---
 
-## 🛠️ Core Technologies
+## 🛠️ Tech Stack
 
-| Category | Technology | Status |
+| Category | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Infrastructure** | Fedora VM & Android (Termux) | ✅ Implemented |
-| **Backend** | Python, FastAPI | ✅ Implemented |
-| **Database** | PostgreSQL | 🚧 Planned |
-| **Migrations** | Alembic | 🚧 Planned |
-| **Containerization** | Podman | ✅ Implemented |
-| **Frontend** | React + Vite + TS | ✅ In Progress |
-| **CI/CD** | GitHub Actions | ✅ Implemented |
-| **Monitoring** | Prometheus, Grafana | 🚧 Planned |
-
----
-
-## 📁 Project Structure
-
-fedora-devops-lab/ ├── .github/ # <-- NEW! GitHub Actions │ └── workflows/ │ ├── lint.yml # CI Linter Agent │ └── build.yml # CI Build Agent ├── dashboard/ │ ├── backend/ │ │ ├── app/ │ │ │ └── main.py │ │ ├── Dockerfile │ │ └── requirements.txt │ └── frontend/ │ ├── src/ │ ├── package.json │ └── vite.config.ts ├── docs/ │ ├── progress.md # Project milestone log │ ├── networking.md # IP/Port reference │ └── teaching_insights.md # Main technical documentation └── README.md # You are here
-
+| **Production Host** | Render (PaaS) | Live API Deployment |
+| **Local Dev Host** | Docker Compose | Local Testing |
+| **Backend** | Python, FastAPI | REST API |
+| **Containerization** | Docker | Build/Run Environment |
+| **CI/CD** | GitHub Actions | Automated Linting & Builds |
+| **Frontend** | React + Vite + TS | User Interface |
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
