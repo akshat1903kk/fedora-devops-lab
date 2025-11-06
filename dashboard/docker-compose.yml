@@ -1,11 +1,12 @@
-version: '3.8'
-services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "5173:80"
+version: "3.8"
 
+services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend # Tells Compose to look in the 'backend' folder
+      dockerfile: Dockerfile
+    container_name: fedora-api-local
     ports:
-      - "8000:8000"
+      - "8000:8000" # Map your PC's port 8000 to the container's port 8000
+    environment:
+      - PORT=8000 =
