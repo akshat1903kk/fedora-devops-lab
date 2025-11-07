@@ -1,0 +1,17 @@
+services:
+  # --- The Backend API Service ---
+  - type: web
+    name: fedora-lab-api
+    env: docker
+    repo: https://github.com/akshat1903kk/fedora-devops-lab
+    branch: main # or whatever your main branch is called
+    rootDir: dashboard/backend # Tell Render where the Dockerfile is
+    plan: free
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8000 # Matches the port in your Dockerfile/Uvicorn
+
+
+  # --- The Frontend Static Site ---
+  # pass

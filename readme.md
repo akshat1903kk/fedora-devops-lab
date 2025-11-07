@@ -1,114 +1,59 @@
+# Cloud DevOps Journey
 
-# Fedora DevOps Lab
-
-A personal, self-hosted DevOps learning environment. This repository documents the journey of building a full-stack monitoring dashboard on a local Fedora server, from bare metal to a containerized, CI/CD-driven application.
+A personal project documenting the journey of building a full-stack, cloud-native application. This repository demonstrates a modern DevOps workflow using Docker, GitHub Actions, and Render.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Project Goal
+## 📊 Project Status: Live on Render
 
-The objective is to build a complete, self-hosted DevOps lab from scratch. This involves:
-* **Infrastructure:** Setting up a Fedora VM as a bare-metal server.
-* **Backend:** A containerized FastAPI application to collect and serve data.
-* **Frontend:** A web dashboard (planned) to visualize system metrics.
-* **DevOps Pipeline:** Full CI/CD, monitoring, and automation (planned).
+This project is fully containerized, automated with CI/CD, and deployed live on the public internet.
 
----
-
-## 📊 Current Status (Updated)
-
-The project is in the initial development phase. The backend service has been successfully containerized.
-
-* ✅ **Infrastructure:** Base Fedora VM is set up and accessible.
-* ✅ **Backend:** Created a basic FastAPI application (`backend/app/main.py`).
-* ✅ **Containerization:** Wrote a `Dockerfile` for the backend.
-* ✅ **Build:** Successfully built the `fedora-backend` Docker image.
-* ✅ **Deployment:** The backend container runs and serves "Hello World" & `/health` endpoints.
-
-**Next Steps:**
-* Integrate the backend with a PostgreSQL database.
-* Set up Alembic for database migrations.
-* Begin development of the frontend dashboard.
+* **Production:** The backend API is deployed on **Render** as a web service.
+* **CI/CD:**
+    * **Continuous Integration (CI):** GitHub Actions automatically lints Python/React code and validates the Docker build on every push.
+    * **Continuous Deployment (CD):** Render is connected to this repo and automatically deploys any push to the `main` branch to production.
+* **Frontend:** A React + Vite app (in progress).
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Getting Started (Local Development)
 
-You can now build and run the backend service.
-
-### Prerequisites
-
-* [Docker](https://www.docker.com/get-started) installed and running.
-* [Git](https://git-scm.com/)
-
-### Running the Backend
+You can run the entire backend stack on your local machine with a single command using Docker Compose.
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/akshat1903kk/fedora-devops-lab.git](https://github.com/akshat1903kk/fedora-devops-lab.git)
-    cd fedora-devops-lab/dashboard/backend
+    git clone [https://github.com/akshat1903kk/FastAPI-React-Lab.git](https://github.com/akshat1903kk/FastAPI-React-Lab.git)
+    cd FastAPI-React-Lab
     ```
 
-2.  **Build the Docker image:**
-    From within the `dashboard/backend` directory, run:
+2.  **Start the application:**
+    This command builds the Docker image and starts the container.
     ```bash
-    docker build -t fedora-backend .
+    docker-compose up --build
     ```
 
-3.  **Run the container:**
+3.  **Test the local API:**
+    The server will be running on your local machine.
     ```bash
-    docker run -d -p 8000:8000 --name fedora-api fedora-backend
+    curl http://localhost:8000/api/v1/status
     ```
-
-4.  **Test the API:**
-    Open your browser or use `curl` to test the endpoints:
-    ```bash
-    # Test the root endpoint
-    curl http://localhost:8000/
-    # Expected output: {"message":"Hello, Fedora DevOps Lab!"}
-
-    # Test the health check
-    curl http://localhost:8000/health
-    # Expected output: {"status":"ok"}
-    ```
+    *(Expected output: `{"status":"DevOps Lab API is Live"}`)*
 
 ---
 
-## 🛠️ Core Technologies
+## 🛠️ Tech Stack
 
-| Category | Technology | Status |
+| Category | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Infrastructure** | Fedora VM | ✅ Implemented |
-| **Backend** | Python, FastAPI | ✅ Implemented |
-| **Database** | PostgreSQL | 🚧 Planned |
-| **Migrations** | Alembic | 🚧 Planned |
-| **Containerization** | Docker | ✅ Implemented |
-| **Frontend** | React / Vue (TBD) | 🚧 Planned |
-| **CI/CD** | GitHub Actions | 🚧 Planned |
-| **Monitoring** | Prometheus, Grafana | 🚧 Planned |
-
----
-
-## 📁 Project Structure
-
-
-fedora-devops-lab/
-├── dashboard/
-│   ├── backend/
-│   │   ├── app/
-│   │   │   └── main.py       # FastAPI application logic
-│   │   ├── venv/             # Local virtual environment (in .gitignore)
-│   │   ├── Dockerfile        # Instructions to build the backend image
-│   │   └── requirements.txt  # Python dependencies
-│   │
-│   └── frontend/             # (Placeholder for frontend code)
-│
-├── docs/                     # Project documentation, diagrams, etc.
-└── readme.md                 # You are here
+| **Production Host** | Render (PaaS) | Live API Deployment |
+| **Local Dev Host** | Docker Compose | Local Testing |
+| **Backend** | Python, FastAPI | REST API |
+| **Containerization** | Docker | Build/Run Environment |
+| **CI/CD** | GitHub Actions | Automated Linting & Builds |
+| **Frontend** | React + Vite + TS | User Interface |
 
 ---
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
